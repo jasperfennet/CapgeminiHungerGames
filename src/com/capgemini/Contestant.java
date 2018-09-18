@@ -3,7 +3,10 @@ package com.capgemini;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Contestant {
+public class Contestant implements Fight {
+
+    private static Random random = new Random();
+
 
     private int id;
     private int health;
@@ -21,13 +24,23 @@ public class Contestant {
 
     public static ArrayList<Contestant> generateContestants(ArrayList<Contestant> contestantList) {
 
-        Random random = new Random();
-
         while (contestantList.size() != HungerGames.AMOUNTCONTESTANTS) {
-            contestantList.add(new Contestant(contestantList.size()+1, random.nextInt(150), random.nextInt(15), random.nextInt(15), false));
-            contestantList.add(new Contestant(contestantList.size()+1, random.nextInt(150), random.nextInt(15), random.nextInt(15), true));
+            contestantList.add(new Contestant(contestantList.size() + 1, random.nextInt(150)+1, random.nextInt(15)+1, random.nextInt(15)+1, false));
+            contestantList.add(new Contestant(contestantList.size() + 1, random.nextInt(150)+1, random.nextInt(15)+1, random.nextInt(15)+1, true));
         }
         return contestantList;
+    }
+
+    public boolean isDead() {
+        return health <= 0;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getHealth() {
+        return health;
     }
 
     @Override
@@ -39,5 +52,23 @@ public class Contestant {
                 ", defence=" + defence +
                 ", isFemale=" + isFemale +
                 '}';
+    }
+
+    @Override
+    public int attack() {
+        int damage = attack + (random.nextInt(attack)/ 2);
+        return damage;
+    }
+
+    @Override
+    public int heal() {
+        int healing = defence + (random.nextInt((defence) / 2));
+        health += healing;
+        return healing;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        health -= damage;
     }
 }
