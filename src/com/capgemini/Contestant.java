@@ -18,4 +18,16 @@ public class Contestant {
         this.isFemale = isFemale;
         currentID++;
     }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDefence() {
+        return defence;
+    }
+
+    public int getId() {
+        return id;
+    }
 }
