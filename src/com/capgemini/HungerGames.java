@@ -15,8 +15,23 @@ public class HungerGames {
 
     private void start() {
         printIntroHungergames();
+        beginBattles();
 
+    }
 
+    private void beginBattles(){
+        while(contestants.size() != 1){
+            FightCycle fightCycle = new FightCycle(getRandomContestant(), getRandomContestant());
+            contestants.remove(fightCycle.battle());
+            System.out.println(contestants.size());
+        }
+        printHungerGamesWinner();
+
+    }
+
+    private void printHungerGamesWinner() {
+        System.out.println("*** All other contestants killed");
+        System.out.printf("*** Hunger Games winner is contestant %d", contestants.get(0).getId());
     }
 
     public ArrayList<Contestant> getContestants() {
@@ -34,6 +49,11 @@ public class HungerGames {
         }
     }
 
+    public Contestant getRandomContestant(){
+        Random random = new Random();
+        return contestants.get(random.nextInt(contestants.size()));
+
+    }
     public void printIntroHungergames() {
         System.out.printf("*** This year's Hunger Games contains %s contestants.\n", contestants.size());
         System.out.printf("*** During this years hunger games we let contestants fight untill we have a winner.\n");
